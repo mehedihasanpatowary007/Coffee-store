@@ -8,7 +8,8 @@ const port = process.env.PORT_NO;
 
 const dbUsername = process.env.USER_NAME;
 const dbPassword = process.env.PASSWORD;
-
+app.use(cors());
+app.use(express.json());
 const uri = `mongodb+srv://${dbUsername}:${dbPassword}@cluster0.lbhte.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
@@ -119,9 +120,6 @@ async function run() {
 }
 
 run();
-
-app.use(cors());
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello!! I am from backend");
