@@ -62,7 +62,7 @@ async function run() {
       }
     });
 
-    app.put("/all-coffee/:id", async (req,res) => {
+    app.put("/admin/all-coffee/update/:id", async (req,res) => {
         const updateCoffeeId = req.params.id
         const filter = {id: updateCoffeeId}
         const updateCoffee= req.body
@@ -93,7 +93,7 @@ async function run() {
         }
     })
 
-    app.delete('/all-coffee/:id', async(req, res) => {
+    app.delete('/admin/all-coffee/:id', async(req, res) => {
         const deleteId = req.params.id
         const query = {id: deleteId}
 
