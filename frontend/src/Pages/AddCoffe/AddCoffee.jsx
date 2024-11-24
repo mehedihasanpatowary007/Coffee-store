@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import {  FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { v4 as uuidv4 } from 'uuid';
 
 const AddCoffee = () => {
+  const navigate = useNavigate()
   const [coffeeInfo, setCoffeeInfo] = useState({
     name: "",
     supplier: "",
@@ -24,7 +25,6 @@ const AddCoffee = () => {
   const convertImageToBase64 = (file) =>{
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-
       reader.onloadend = () => {
         resolve(reader.result);
       };
@@ -81,19 +81,11 @@ const AddCoffee = () => {
   }
   return (
     <div className="bg-add-coffee-bg bg-center bg-cover">
-      <div className="container mx-auto mt-6 mb-10">
-        <div>
-          <Link
-            to={"/"}
-            className="text-[#374151] text-xl flex items-center gap-3"
-          >
-            <span>
-              <FaArrowLeft />
-            </span>
-            <span>Back to home</span>
-          </Link>
-        </div>
-        <div className="bg-[#F4F3F0] mt-10 py-10 px-20">
+      <div className="container mx-auto">
+        <button className="ms-5 mt-5 text-xl" onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </button>
+        <div className="py-10 px-20">
           <div className="w-2/3 mx-auto space-y-4">
             <h1 className="text-3xl text-[#374151] font-bold text-center">
               Add New Coffee

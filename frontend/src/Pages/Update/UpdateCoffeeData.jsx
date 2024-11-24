@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 const UpdateCoffeeData = () => {
   const oldCoffeeData = useLoaderData();
+  const navigate = useNavigate()
   const [newCoffeeInfo, setNewCoffeeInfo] = useState(oldCoffeeData);
-
   const [newImage, setNewImage] = useState('');
 
 
@@ -44,21 +44,23 @@ const UpdateCoffeeData = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const payload = { ...newCoffeeInfo };
     if(newImage){
-      console.log('new',newImage)
-      setNewCoffeeInfo({ ...newCoffeeInfo, image: newImage });
+      payload.image = newImage
+      // setNewCoffeeInfo({ ...newCoffeeInfo, image: newImage }); x
     }else{
-      console.log('old',oldCoffeeData.image);
-      setNewCoffeeInfo({ ...newCoffeeInfo, image: oldCoffeeData.image });
+      payload.image = oldCoffeeData.image;
+      // setNewCoffeeInfo({ ...newCoffeeInfo, image: oldCoffeeData.image }); x
     }
+
     const response = await fetch(
-      `http://localhost:5000/all-coffee/${oldCoffeeData.id}`,
+      `http://localhost:5000/admin/all-coffee/update/${oldCoffeeData.id}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newCoffeeInfo),
+        body: JSON.stringify(payload),
       }
     );
     const data = await response.json();
@@ -77,19 +79,11 @@ const UpdateCoffeeData = () => {
   };
   return (
     <div className="bg-add-coffee-bg bg-center bg-cover">
-      <div className="container mx-auto mt-6 mb-10">
-        <div>
-          <Link
-            to={"/"}
-            className="text-[#374151] text-xl flex items-center gap-3"
-          >
-            <span>
-              <FaArrowLeft />
-            </span>
-            <span>Back to home</span>
-          </Link>
-        </div>
-        <div className="bg-[#F4F3F0] mt-10 py-10 px-20">
+      <div className="container mx-auto mt-6 mb-10"> 
+          <button className="ms-5 mt-5 text-xl" onClick={() => navigate(-1)}>
+            <FaArrowLeft />
+          </button>
+        <div className="mt-5 py-10 px-20">
           <div className="w-2/3 mx-auto space-y-4">
             <h1 className="text-3xl text-[#374151] font-bold text-center">
               Update Existing Coffee Details
@@ -195,7 +189,7 @@ const UpdateCoffeeData = () => {
             <div className="mt-5 space-y-5">
               <div className="flex">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="coffee-image">Coffee Image</label>
+                  <label htmlFor="image">Coffee Image</label>
                   <input
                     onChange={handleImage}
                     accept="image/*"

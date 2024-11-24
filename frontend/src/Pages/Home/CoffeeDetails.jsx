@@ -1,8 +1,9 @@
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 const CoffeeDetails = () => {
     const {id} = useParams()
+    const navigate = useNavigate()
     console.log(id)
     const [singleCoffeeInfo, setSingleCoffeeInfo] = useState({})
     const loadSingleCoffeeInfo = async () => {
@@ -16,27 +17,21 @@ const CoffeeDetails = () => {
     },[])
     return (
       <div className="bg-add-coffee-bg bg-center bg-cover">
-        <div className="container mx-auto mt-6 mb-10">
-          <div>
-            <Link
-              to={"/"}
-              className="text-[#374151] text-xl flex items-center gap-3"
-            >
-              <span>
-                <FaArrowLeft />
-              </span>
-              <span>Back to home</span>
-            </Link>
-          </div>
-          <div className="bg-[#F4F3F0] mt-10 py-10 px-20">
-            <div className="bg-[#F5F4F1] flex items-center justify-between rounded jus">
+        <div className="container mx-auto mt-5 mb-10">
+          <button className=" text-xl" onClick={() => navigate(-1)}>
+            <FaArrowLeft />
+          </button>
+          <div className="bg-[#F4F3F0] mt-5 py-10 px-20">
+            <h1 className="text-3xl font-extrabold text-[#331A15] mb-4 text-shadow">
+              Espresso Emporium
+            </h1>
+            <div className="bg-[#F5F4F1] flex items-center justify-between rounded">
               <img
                 className="h-96"
                 src={singleCoffeeInfo?.image}
                 alt="product_image"
               />
-              <div className="space-y-5">
-                <h1 className="text-2xl font-bold text-[#331A15]">Niceties</h1>
+              <div className="space-y-5 w-[55%]">
                 <h1 className="text-xl">
                   <strong>Name:</strong>
                   <span className="text-gray-700">
@@ -68,8 +63,16 @@ const CoffeeDetails = () => {
                   </span>
                 </p>
                 <p className="text-xl">
+                  <strong>Details:</strong>{" "}
+                  <span className="text-gray-700">
+                    {singleCoffeeInfo?.details}
+                  </span>
+                </p>
+                <p className="text-xl">
                   <strong>Price:</strong>
-                  <span className="text-gray-700">{singleCoffeeInfo?.price}</span>
+                  <span className="text-gray-700">
+                    {singleCoffeeInfo?.price}
+                  </span>
                 </p>
               </div>
             </div>

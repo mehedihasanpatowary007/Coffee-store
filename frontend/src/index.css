@@ -9,6 +9,6 @@ body{
     font-family: "Rancho", cursive;
 }
 
-.custom-confirm-button{
-   background-color: red;
+.text-shadow{
+    text-shadow: 5px 5px 9px #CE5937;
 }
